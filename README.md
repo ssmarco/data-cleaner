@@ -2,6 +2,37 @@
 
 At some point we need to do housekeeping of large tables in our website especially versions table.
 
+## Example Use Case
+
+Simple class with basic inheritance but has versioning applied and is only created/updated by a custom API
+
+```php
+class DigitalAsset extends File {
+    private static $db = [
+        'FileCategory' => 'Enum("Brochures, Manuals, Polices,", "")',
+        'Sort'         => DBInt::class
+    ];
+
+    private static $has_many = [];  // Not taken into account with
+    private static $many_many = []; // complex relationships
+
+}
+```
+
+This generates 2 tables with identical rows having `RecordID` and `Version` columns.
+`DigitalAsset_Versions` and `File_Versions`
+
+The task will create a queue job that will delete eg, latest 5 records in each versions table.
+
+
+## Disclaimer
+
+This is just a proof of concept and in early developement.
+
+Has not been tested in pages with complex relationships defined.
+
+But for simple dataobject inheritance, then please check it out.
+
 ## Requirements
 
 * SilverStripe ^4.0
