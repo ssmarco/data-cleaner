@@ -26,7 +26,7 @@ class DataVersionCleanerTask extends BuildTask
         $nextID = $cleaner->nextRecordID();
         if ($nextID) {
             $cleaner->DataID = $nextID;
-            $cleaner->VersionsToKeep = $this->config()->get('VersionsToKeep');
+            $cleaner->VersionsToKeep = $request->getVar('VersionsToKeep') ?: $this->config()->get('VersionsToKeep');
             $cleaner->write();
 
             Debug::dump(sprintf(
